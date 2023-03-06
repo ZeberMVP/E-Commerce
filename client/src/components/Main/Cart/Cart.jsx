@@ -45,7 +45,7 @@ const Cart = () => {
                                     dispatch(increaseQuantity(i))
                                 }}>+</button>
                             </td>
-                            <td><b>{parseInt(item.price * item.quantity).toFixed(2)} $</b></td>
+                            <td><b>{item.price * item.quantity} $</b></td>
                         </tr>
                     )
                 })}
