@@ -79,28 +79,6 @@ function cartReducer(state = INITIAL_STATE, action) {
                 }
             }
 
-        case INCREASE_SIZE:
-            if (state.cartItems[action.payload].size < 47) {
-                state.cartItems[action.payload].size++;
-                return {
-                    ...state,
-                    cartItems: state.cartItems
-                }
-            } else {
-                break;
-            }
-
-        case DECREASE_SIZE:
-            if (state.cartItems[action.payload].size > 37) {
-                state.cartItems[action.payload].size--;
-                return {
-                    ...state,
-                    cartItems: state.cartItems
-                }
-            } else {
-                break;
-            }
-
         case DELETE_CART:
             let quantity_ = state.cartItems[action.payload].quantity;
             return {

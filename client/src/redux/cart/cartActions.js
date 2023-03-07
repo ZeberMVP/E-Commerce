@@ -29,20 +29,6 @@ export const decreaseQuantity = (i) => {
     }
 }
 
-export const increaseSize = (i) => {
-    return {
-        type: INCREASE_SIZE,
-        payload: i
-    }
-}
-
-export const decreaseSize = (i) => {
-    return {
-        type: DECREASE_SIZE,
-        payload: i
-    }
-}
-
 export const deleteCart = (i) => {
     return {
         type: DELETE_CART,

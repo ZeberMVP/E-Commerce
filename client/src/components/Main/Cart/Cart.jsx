@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteCart, decreaseQuantity, increaseQuantity, decreaseSize, increaseSize } from "../../../redux";
+import { deleteCart, decreaseQuantity, increaseQuantity } from "../../../redux";
 
 
 const Cart = () => {
@@ -13,25 +13,18 @@ const Cart = () => {
         TotalCart += item.quantity * item.price;
     });
 
-    const [sizes, setSizes] = useState(items.map(item => item.size));
+    const [sizes, setSizes] = useState(items.map(() => 40));
 
-    const handleIncreaseSize = (i) => {
-        dispatch(increaseSize(i));
-        const newSizes = [...sizes];
-        if (newSizes < 47) {
-            newSizes[i]++;
-            setSizes(newSizes);
+    const handleSizeChange = (index, newSize) => {
+        if (newSize >= 37 && newSize <= 47) {
+            setSizes(prevSizes => {
+                const newSizes = [...prevSizes];
+                newSizes[index] = newSize;
+                return newSizes;
+            });
         }
     };
 
-    const handleDecreaseSize = (i) => {
-        dispatch(decreaseSize(i));
-        const newSizes = [...sizes];
-        if (newSizes > 37) {
-            newSizes[i]--;
-            setSizes(newSizes);
-        }
-    };
 
     return (
         <table className="table">
@@ -48,6 +41,7 @@ const Cart = () => {
             </thead>
             <tbody>
                 {items.map((item, i) => {
+                    const size = sizes[i];
                     return (
                         <tr key={i} i={i}>
                             <td><button style={{ cursor: "pointer" }} onClick={() => {
@@ -57,31 +51,46 @@ const Cart = () => {
                             <td><img src={item.image} alt={item.product_name} style={{ width: '100px', height: '80px' }} /></td>
                             <td>{item.price} $</td>
                             <td>
-                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => handleDecreaseSize(i)}>-</button>
-                                <span>{sizes[i]}</span>
-                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => handleIncreaseSize(i)}>+</button>
+                                <button
+                                    style={{ margin: '2px', cursor: 'pointer' }}
+                                    onClick={() => handleSizeChange(i, size - 1)}
+                                >
+                                    -
+                                </button>
+                                <span>{size}</span>
+                                <button
+                                    style={{ margin: '2px', cursor: 'pointer' }}
+                                    onClick={() => handleSizeChange(i, size + 1)}
+                                >
+                                    +
+                                </button>
                             </td>
                             <td>
                                 <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
                                     dispatch(decreaseQuantity(i))
-                                }}>-</button>
+                                }}>
+                                    -
+                                </button>
                                 <span>{item.quantity}</span>
                                 <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
                                     dispatch(increaseQuantity(i))
-                                }}>+</button>
+                                }}>
+                                    +
+                                </button>
                             </td>
-                            <td><b>{item.price * item.quantity} $</b></td>
+                            <td><b>{(item.quantity * item.price).toFixed(2)} $</b></td>
                         </tr>
                     )
                 })}
                 <tr>
                     <td colSpan="6" style={{ textAlign: 'right' }}>Total Price:</td>
-                    <td><b>{TotalCart} $</b></td>
+                    <td><b>{TotalCart.toFixed(2)} $</b></td>
                 </tr>
             </tbody>
         </table>
     )
 }
 
-export default Cart
 
+
+export default Cart
