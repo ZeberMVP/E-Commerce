@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from "../../../redux";
 
+const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
+
+const api = axios.create({
+    baseURL: serverUrl
+});
+
 
 const Products = () => {
     const dispatch = useDispatch();
@@ -37,7 +43,7 @@ const Products = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/product");
+                const res = await api.get("/api/product");
                 const data = await res.data;
                 dispatch(getAllProducts(data))
             } catch (error) {

@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path');
+const cors = require('cors');
 require('dotenv').config();
 
 // Middlewares modules
@@ -12,10 +12,15 @@ const providerRouter = require('./routes/providerRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
-
+app.use(cors());
 app.use(express.json({ extended: false }));
 app.use(morgan('dev'));
+
+
+
+// Routes:
+app.use('/api/product', productRouter);
+app.use('/api/provider', providerRouter);
 
 if (process.env.NODE_ENV === 'production') {
     //*Set static folder
@@ -23,11 +28,6 @@ if (process.env.NODE_ENV === 'production') {
 
     app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
 }
-
-// Routes:
-app.use('/api/product', productRouter);
-app.use('/api/provider', providerRouter);
-
 
 
 app.listen(PORT, () => console.log(`Server started port ${PORT}`));
