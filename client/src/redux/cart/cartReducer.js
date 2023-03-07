@@ -84,8 +84,7 @@ function cartReducer(state = INITIAL_STATE, action) {
                 state.cartItems[action.payload].size++;
                 return {
                     ...state,
-                    cartItems: state.cartItems,
-                    size: state.cartItems[action.payload].size + 1
+                    cartItems: state.cartItems
                 }
             } else {
                 break;
@@ -96,8 +95,7 @@ function cartReducer(state = INITIAL_STATE, action) {
                 state.cartItems[action.payload].size--;
                 return {
                     ...state,
-                    cartItems: state.cartItems,
-                    size: state.cartItems[action.payload].size - 1
+                    cartItems: state.cartItems
                 }
             } else {
                 break;

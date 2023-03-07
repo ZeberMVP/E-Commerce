@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteCart, decreaseQuantity, increaseQuantity, decreaseSize, increaseSize } from "../../../redux";
 
@@ -12,6 +12,26 @@ const Cart = () => {
     items.forEach(item => {
         TotalCart += item.quantity * item.price;
     });
+
+    const [sizes, setSizes] = useState(items.map(item => item.size));
+
+    const handleIncreaseSize = (i) => {
+        dispatch(increaseSize(i));
+        const newSizes = [...sizes];
+        if (newSizes < 47) {
+            newSizes[i]++;
+            setSizes(newSizes);
+        }
+    };
+
+    const handleDecreaseSize = (i) => {
+        dispatch(decreaseSize(i));
+        const newSizes = [...sizes];
+        if (newSizes > 37) {
+            newSizes[i]--;
+            setSizes(newSizes);
+        }
+    };
 
     return (
         <table className="table">
@@ -37,13 +57,9 @@ const Cart = () => {
                             <td><img src={item.image} alt={item.product_name} style={{ width: '100px', height: '80px' }} /></td>
                             <td>{item.price} $</td>
                             <td>
-                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
-                                    dispatch(decreaseSize(i))
-                                }}>-</button>
-                                <span>{item.size}</span>
-                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
-                                    dispatch(increaseSize(i))
-                                }}>+</button>
+                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => handleDecreaseSize(i)}>-</button>
+                                <span>{sizes[i]}</span>
+                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => handleIncreaseSize(i)}>+</button>
                             </td>
                             <td>
                                 <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
@@ -67,6 +83,5 @@ const Cart = () => {
     )
 }
 
-
-
 export default Cart
+
