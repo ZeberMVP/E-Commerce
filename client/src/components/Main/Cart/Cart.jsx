@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteCart, decreaseQuantity, increaseQuantity } from "../../../redux";
+import { deleteCart, decreaseQuantity, increaseQuantity, decreaseSize, increaseSize } from "../../../redux";
 
 
 const Cart = () => {
     const dispatch = useDispatch();
     const items = useSelector(state => state.cartItems);
     useSelector(state => state.numberItems);
-
 
     let TotalCart = 0;
     items.forEach(item => {
@@ -22,6 +21,7 @@ const Cart = () => {
                     <th>Name</th>
                     <th>Image</th>
                     <th>Price</th>
+                    <th>Size</th>
                     <th>Quantity</th>
                     <th>Total Price</th>
                 </tr>
@@ -33,9 +33,18 @@ const Cart = () => {
                             <td><button style={{ cursor: "pointer" }} onClick={() => {
                                 dispatch(deleteCart(i))
                             }}>X</button></td>
-                            <td>{item.title}</td>
-                            <td><img src={item.image} alt={item.title} style={{ width: '100px', height: '80px' }} /></td>
+                            <td>{item.product_name}</td>
+                            <td><img src={item.image} alt={item.product_name} style={{ width: '100px', height: '80px' }} /></td>
                             <td>{item.price} $</td>
+                            <td>
+                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
+                                    dispatch(decreaseSize(i))
+                                }}>-</button>
+                                <span>{item.size}</span>
+                                <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
+                                    dispatch(increaseSize(i))
+                                }}>+</button>
+                            </td>
                             <td>
                                 <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
                                     dispatch(decreaseQuantity(i))
@@ -50,14 +59,14 @@ const Cart = () => {
                     )
                 })}
                 <tr>
-                    <td colSpan="5">Total: </td>
-                    <td><b>{Number(TotalCart).toFixed(2)} $</b></td>
+                    <td colSpan="6" style={{ textAlign: 'right' }}>Total Price:</td>
+                    <td><b>{TotalCart} $</b></td>
                 </tr>
             </tbody>
-
         </table>
     )
 }
+
 
 
 export default Cart

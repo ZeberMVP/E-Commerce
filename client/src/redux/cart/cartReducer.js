@@ -22,13 +22,13 @@ function cartReducer(state = INITIAL_STATE, action) {
                     quantity: 1,
                     size: 40,
                     image: action.payload.image,
-                    price: action.payload.price,
+                    price: action.payload.price
                 }
                 state.cartItems.push(cart);
             } else {
                 let check = false;
                 state.cartItems.forEach((item, i) => {
-                    if (item.id === action.payload.id) {
+                    if (item.product_name === action.payload.product_name) {
                         state.cartItems[i].quantity++;
                         check = true;
                     }
@@ -36,13 +36,12 @@ function cartReducer(state = INITIAL_STATE, action) {
                 });
                 if (!check) {
                     let _cart = {
-                        id: action.payload.id,
-                        title: action.payload.title,
+                        product_name: action.payload.product_name,
+                        relevance: action.payload.relevance,
                         quantity: 1,
-                        category: action.payload.category,
+                        size: 40,
                         image: action.payload.image,
-                        price: action.payload.price,
-                        description: action.payload.description
+                        price: action.payload.price
                     }
                     state.cartItems.push(_cart);
                 }
@@ -74,35 +73,34 @@ function cartReducer(state = INITIAL_STATE, action) {
                 state.cartItems[action.payload].quantity = 0;
                 return {
                     ...state,
-                    cartItems: state.cartItems.filter(item => item.id !== state.cartItems[action.payload].id),
+                    cartItems: state.cartItems.filter(item => item.product_name !== state.cartItems[action.payload].product_name),
                     numberItems: state.numberItems - 1
 
                 }
             }
 
         case INCREASE_SIZE:
-            let size = state.cartItems[action.payload].size;
-            if (size < 47) {
+            if (state.cartItems[action.payload].size < 47) {
                 state.cartItems[action.payload].size++;
                 return {
                     ...state,
                     cartItems: state.cartItems,
-                    size: state.size + 1
+                    size: state.cartItems[action.payload].size + 1
                 }
             } else {
                 break;
             }
 
         case DECREASE_SIZE:
-            if (size > 37) {
+            if (state.cartItems[action.payload].size > 37) {
                 state.cartItems[action.payload].size--;
                 return {
                     ...state,
                     cartItems: state.cartItems,
-                    size: state.size - 1
+                    size: state.cartItems[action.payload].size - 1
                 }
             } else {
-                break
+                break;
             }
 
         case DELETE_CART:
@@ -110,7 +108,7 @@ function cartReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 numberItems: state.numberItems - quantity_,
-                cartItems: state.cartItems.filter(item => item.id !== state.cartItems[action.payload].id)
+                cartItems: state.cartItems.filter(item => item.product_name !== state.cartItems[action.payload].product_name)
             }
 
         default:
