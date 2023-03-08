@@ -5,6 +5,7 @@ import { addToCart } from "../../../../redux";
 
 const Product = (props) => {
     const dispatch = useDispatch();
+
     return (
         <div className='productCard'>
             <h3>{props.product.product_name}</h3>
