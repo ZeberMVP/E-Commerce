@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCTS, ADD_CART, INCREASE_QUANTITY, DECREASE_QUANTITY, INCREASE_SIZE, DECREASE_SIZE, DELETE_CART } from './cartTypes'
+import { GET_ALL_PRODUCTS, ADD_CART, INCREASE_QUANTITY, DECREASE_QUANTITY, DELETE_CART } from './cartTypes'
 
 
 export const getAllProducts = (products) => {
@@ -25,20 +25,6 @@ export const increaseQuantity = (i) => {
 export const decreaseQuantity = (i) => {
     return {
         type: DECREASE_QUANTITY,
-        payload: i
-    }
-}
-
-export const increaseSize = (i) => {
-    return {
-        type: INCREASE_SIZE,
-        payload: i
-    }
-}
-
-export const decreaseSize = (i) => {
-    return {
-        type: DECREASE_SIZE,
         payload: i
     }
 }

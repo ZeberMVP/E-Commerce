@@ -1,4 +1,4 @@
-const { Provider } = require('../config/db');
+const { Product, Provider } = require('../config/db');
 
 const createProvider = async (req, res) => {
     const { provider_name, CIF, address } = req.body;
@@ -24,8 +24,8 @@ const getProviderByProduct = async (req, res) => {
         const product = await Product.findOne({ where: { product_name: req.params.product_name } })
         const provider = await Provider.findOne({ where: { provider_name: product.provider_name } })
 
-        res.status(200).json(provider);
-    } catch {
+        res.status(200).json({ product, provider });
+    } catch (err) {
         console.log(err);
         res.status(500).send('Server Error, GET Method');
     }

@@ -5,12 +5,60 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from "../../../redux";
 
+const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
+
+const api = axios.create({
+    baseURL: serverUrl
+});
+
 
 const Products = () => {
     const dispatch = useDispatch();
-    const _products = useSelector(state => state._products);
-    const numberItems = useSelector(state => state.numberItems);
+    const _products = useSelector((state) => state._products);
+    const numberItems = useSelector((state) => state.numberItems);
     const [scroll, setScroll] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentOrder, setCurrentOrder] = useState("relevance_desc");
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const handleOrderChange = (order) => {
+        setCurrentOrder(order);
+    };
+
+    const handleSearchTermChange = (event) => {
+        setSearchTerm(event.target.value);
+    }
+
+    const filteredProducts = _products.filter(product =>
+        product.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.provider_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    if (currentOrder === "product_name_asc") {
+        filteredProducts.sort((a, b) =>
+            a.product_name.localeCompare(b.product_name)
+        );
+    } else if (currentOrder === "product_name_desc") {
+        filteredProducts.sort((a, b) =>
+            b.product_name.localeCompare(a.product_name)
+        );
+    } else if (currentOrder === "relevance_asc") {
+        filteredProducts.sort((a, b) => a.relevance - b.relevance);
+    } else if (currentOrder === "relevance_desc") {
+        filteredProducts.sort((a, b) => b.relevance - a.relevance);
+    } else if (currentOrder === "price_asc") {
+        filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (currentOrder === "price_desc") {
+        filteredProducts.sort((a, b) => b.price - a.price);
+    }
+
+    const itemsPerPage = 10;
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedProducts = filteredProducts.slice(start, end);
 
 
     const detectScroll = () => {
@@ -37,7 +85,7 @@ const Products = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/product");
+                const res = await api.get("/api/product");
                 const data = await res.data;
                 dispatch(getAllProducts(data))
             } catch (error) {
@@ -51,7 +99,51 @@ const Products = () => {
     if (_products.length !== 0) {
         return (
             <div id='productCardContainer'>
-                {_products.map((product, i) => <Product key={i} product={product} />)}
+                <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
+                <div className="filters">
+                    <label>
+                        Order by:
+                        <select
+                            value={currentOrder}
+                            onChange={(e) => handleOrderChange(e.target.value)}
+                        >
+                            <option value="relevance_desc">Relevance High to Low</option>
+                            <option value="relevance_asc">Relevance Low to High</option>
+                            <option value="product_name_asc">Name A-Z</option>
+                            <option value="product_name_desc">Name Z-A</option>
+                            <option value="price_asc">Price Low to High</option>
+                            <option value="price_desc">Price High to Low</option>
+                        </select>
+                    </label>
+                </div>
+                {paginatedProducts.map((product, i) => (
+                    <div className='productCard' key={i}>
+                        <Link
+                            to={{
+                                pathname: `/product/${product.product_name}`,
+                                state: { product }
+                            }}
+                        >
+                            <Product product={product} />
+                        </Link>
+                    </div>
+                ))}
+
+
+                <div className="pagination">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        disabled={end >= filteredProducts.length}
+                        onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
                 <Link id='cartFixed' to="/cart" title='Shopping cart'>
                     <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="shopping cart" />
                     <span>{numberItems}</span>
@@ -61,7 +153,7 @@ const Products = () => {
     }
     else {
         return (
-            <span className="loader">Loading...</span>
+            <span className="loader"></span>
 
         )
     }
