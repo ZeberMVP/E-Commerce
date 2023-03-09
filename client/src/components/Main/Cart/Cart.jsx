@@ -15,7 +15,7 @@ const Cart = () => {
 
     const [sizes, setSizes] = useState(items.map(() => 40));
     const [email, setEmail] = useState('');
-    const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
+    const serverUrl = process.env.RENDER_EXTERNAL_URL || 'http://localhost:5000';
 
     const api = axios.create({
         baseURL: serverUrl

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
+const serverUrl = process.env.RENDER_EXTERNAL_URL || 'http://localhost:5000';
 
 const api = axios.create({
     baseURL: serverUrl
