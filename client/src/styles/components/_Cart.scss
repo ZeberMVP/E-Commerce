@@ -1,5 +1,10 @@
+#cart {
+    width: 100%;
+}
+
 .table {
     width: 100%;
+    font-size: 0.8em;
 }
 
 tbody>tr {
@@ -14,4 +19,20 @@ td {
 td>img {
     width: 80px;
     height: 80px;
+}
+
+#email-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+
+    label {
+        margin-right: 5px;
+        font-family: 'Roboto Slab', serif;
+    }
+
+    button {
+        margin-left: 15px;
+    }
 }

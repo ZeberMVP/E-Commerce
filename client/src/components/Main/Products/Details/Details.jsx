@@ -19,7 +19,6 @@ const Details = () => {
                 const res = await api.get(`/api/provider/${product_name}`);
                 const data = await res.data;
                 setProduct(data)
-                console.log(data)
             } catch (error) {
                 console.log(error);
             }
@@ -28,16 +27,20 @@ const Details = () => {
     }, [setProduct, product_name])
 
     return (
-        <div>
+        <div className="details-container">
             <button className='button--secondary' onClick={() => navigate(-1)}>Back</button>
             {product ?
-                <div>
-                    <h3>{product.product.product_name.toUpperCase()}</h3>
+                <div className="product-container">
+                    <h3>{product.product.product_name
+                        .split(' ')
+                        .slice(0, 5)
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                        .join(' ')
+                    }</h3>
                     <h4>{product.product.relevance} ⭐</h4>
                     <img src={product.product.image} alt={product.product.product_name} />
                     <h5>{product.product.price} $</h5>
-                    <h4>{product.provider.provider_name}</h4>
-                    <h4>{product.provider.CIF}</h4>
+                    <h4>{`${product.provider.provider_name}, ${product.provider.CIF}`}</h4>
                     <h4>{product.provider.address}</h4>
                 </div>
 
@@ -47,5 +50,6 @@ const Details = () => {
 }
 
 export default Details;
+
 
 
