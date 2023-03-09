@@ -11,7 +11,7 @@ const Header = () => {
       </Link>
       <Link to="/cart" title="Shopping cart" id="cartIconContainer">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/107/107831.png"
+          src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG4.png"
           alt="shopping cart"
         />
         <span>{numberCart}</span>

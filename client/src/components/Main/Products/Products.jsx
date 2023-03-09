@@ -3,7 +3,7 @@ import Product from './Product/Product';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts } from "../../../redux";
+import { getAllProducts, addToCart } from "../../../redux";
 
 const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
 
@@ -98,11 +98,12 @@ const Products = () => {
 
     if (_products.length !== 0) {
         return (
-            <div id='productCardContainer'>
-                <input type="text" value={searchTerm} onChange={handleSearchTermChange} />
-                <div className="filters">
+            <div>
+                <div id='text-and-filters'>
+                    <input type="text" value={searchTerm} onChange={handleSearchTermChange} placeholder="Filter by name or brand" />
+                    <div className="filters">
+                    </div>
                     <label>
-                        Order by:
                         <select
                             value={currentOrder}
                             onChange={(e) => handleOrderChange(e.target.value)}
@@ -116,28 +117,31 @@ const Products = () => {
                         </select>
                     </label>
                 </div>
-                {paginatedProducts.map((product, i) => (
-                    <div className='productCard' key={i}>
-                        <Link
-                            to={{
-                                pathname: `/product/${product.product_name}`,
-                                state: { product }
-                            }}
-                        >
-                            <Product product={product} />
-                        </Link>
-                    </div>
-                ))}
-
-
+                <div id='productCardContainer'>
+                    {paginatedProducts.map((product, i) => (
+                        <div className='productCard' key={i}>
+                            <Link
+                                to={{
+                                    pathname: `/product/${product.product_name}`,
+                                    state: { product }
+                                }}
+                            >
+                                <Product product={product} />
+                            </Link>
+                            <button className='button' onClick={() => {
+                                dispatch(addToCart(product))
+                            }}>Add to cart</button>
+                        </div>
+                    ))}
+                </div>
                 <div className="pagination">
-                    <button
+                    <button className='button--secondary'
                         disabled={currentPage === 1}
                         onClick={() => handlePageChange(currentPage - 1)}
                     >
                         Previous
                     </button>
-                    <button
+                    <button className='button--secondary'
                         disabled={end >= filteredProducts.length}
                         onClick={() => handlePageChange(currentPage + 1)}
                     >
@@ -145,7 +149,7 @@ const Products = () => {
                     </button>
                 </div>
                 <Link id='cartFixed' to="/cart" title='Shopping cart'>
-                    <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="shopping cart" />
+                    <img src="https://pngimg.com/uploads/shopping_cart/shopping_cart_PNG4.png" alt="shopping cart" />
                     <span>{numberItems}</span>
                 </Link>
             </div>

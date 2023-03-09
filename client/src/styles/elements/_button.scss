@@ -1,0 +1,97 @@
+@import '../utils/variables.scss';
+
+.button {
+    background-color: $french-violet;
+    color: white;
+    border-radius: $button-border-radius;
+    padding: $button-padding;
+    font-size: $button-font-size;
+    font-weight: $button-font-weight;
+    letter-spacing: $button-letter-spacing;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: darken($french-violet, 10%);
+    }
+
+    &:active {
+        background-color: darken($french-violet, 20%);
+    }
+}
+
+.button--secondary {
+    background-color: $heliotrope;
+    color: white;
+    border-radius: $button-border-radius;
+    padding: $button-padding;
+    font-size: $button-font-size;
+    font-weight: $button-font-weight;
+    letter-spacing: $button-letter-spacing;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+
+    &:hover {
+        background-color: darken($amethyst, 10%);
+    }
+
+    &:active {
+        background-color: darken($amethyst, 20%);
+    }
+}
+
+.button--delete {
+    background-color: #FF4136;
+    color: white;
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #E71D36;
+    }
+
+    &:active {
+        background-color: #CF1124;
+    }
+}
+
+.button--subtract {
+    background-color: #FFDC00;
+    color: white;
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #FECB2F;
+    }
+
+    &:active {
+        background-color: #F8B627;
+    }
+}
+
+.button--add {
+    background-color: #2ECC40;
+    color: white;
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #24B23D;
+    }
+
+    &:active {
+        background-color: #1D8F32;
+    }
+}

@@ -52,13 +52,12 @@ const Cart = () => {
     };
 
     return (
-        <div>
+        <div id='cart'>
             <table className="table">
                 <thead>
                     <tr>
                         <th></th>
                         <th>Name</th>
-                        <th>Image</th>
                         <th>Price</th>
                         <th>Size</th>
                         <th>Quantity</th>
@@ -70,51 +69,76 @@ const Cart = () => {
                         const size = sizes[i];
                         return (
                             <tr key={i} i={i}>
-                                <td><button style={{ cursor: "pointer" }} onClick={() => {
-                                    dispatch(deleteCart(i))
-                                }}>X</button></td>
-                                <td>{item.product_name}</td>
-                                <td><img src={item.image} alt={item.product_name} style={{ width: '100px', height: '80px' }} /></td>
+                                <td><button
+                                    className='button--delete'
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                        dispatch(deleteCart(i))
+                                    }}>X</button></td>
+                                <td>{item.product_name
+                                    .split(' ')
+                                    .slice(0, 5)
+                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                                    .join(' ')
+                                }</td>
                                 <td>{item.price} $</td>
                                 <td>
-                                    <button
-                                        style={{ margin: '2px', cursor: 'pointer' }}
-                                        onClick={() => handleSizeChange(i, size - 1)}
-                                    >
-                                        -
-                                    </button>
-                                    <span>{size}</span>
-                                    <button
-                                        style={{ margin: '2px', cursor: 'pointer' }}
-                                        onClick={() => handleSizeChange(i, size + 1)}
-                                    >
-                                        +
-                                    </button>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <div style={{ display: 'flex' }}>
+                                            <button
+                                                style={{ margin: '1px', cursor: 'pointer' }}
+                                                onClick={() => handleSizeChange(i, size - 1)}
+                                                className='button--subtract'
+                                            >
+                                                -
+                                            </button>
+                                            <span style={{ margin: '4px' }}>{size}</span>
+                                            <button
+                                                style={{ margin: '1px', cursor: 'pointer' }}
+                                                onClick={() => handleSizeChange(i, size + 1)}
+                                                className='button--add'
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
-                                    <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
-                                        dispatch(decreaseQuantity(i))
-                                    }}>
-                                        -
-                                    </button>
-                                    <span>{item.quantity}</span>
-                                    <button style={{ margin: '2px', cursor: "pointer" }} onClick={() => {
-                                        dispatch(increaseQuantity(i))
-                                    }}>
-                                        +
-                                    </button>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <div style={{ display: 'flex' }}>
+                                            <button
+                                                style={{ margin: '2px', cursor: "pointer" }}
+                                                onClick={() => {
+                                                    dispatch(decreaseQuantity(i))
+                                                }}
+                                                className='button--subtract'
+                                            >
+                                                -
+                                            </button>
+                                            <span style={{ margin: '4px' }}>{item.quantity}</span>
+                                            <button
+                                                style={{ margin: '2px', cursor: "pointer" }}
+                                                onClick={() => {
+                                                    dispatch(increaseQuantity(i))
+                                                }}
+                                                className='button--add'
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td><b>{(item.quantity * item.price).toFixed(2)} $</b></td>
                             </tr>
                         )
                     })}
                     <tr>
-                        <td colSpan="6" style={{ textAlign: 'right' }}>Total Price:</td>
+                        <td colSpan="5" style={{ textAlign: 'right' }}>Total Price:</td>
                         <td><b>{TotalCart.toFixed(2)} $</b></td>
                     </tr>
                 </tbody>
             </table>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id='email-form'>
                 <label htmlFor="email">Email:</label>
                 <input
                     type="email"
@@ -122,7 +146,7 @@ const Cart = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button type="submit">Submit</button>
+                <button className='button' type="submit">Submit</button>
             </form>
         </div>
     )
