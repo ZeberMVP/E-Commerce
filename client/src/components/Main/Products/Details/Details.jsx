@@ -29,10 +29,10 @@ const Details = () => {
 
     return (
         <div>
-            <button onClick={() => navigate(-1)}>Back</button>
+            <button className='button--secondary' onClick={() => navigate(-1)}>Back</button>
             {product ?
                 <div>
-                    <h3>{product.product.product_name}</h3>
+                    <h3>{product.product.product_name.toUpperCase()}</h3>
                     <h4>{product.product.relevance} ⭐</h4>
                     <img src={product.product.image} alt={product.product.product_name} />
                     <h5>{product.product.price} $</h5>
@@ -42,8 +42,6 @@ const Details = () => {
                 </div>
 
                 : null}
-
-            {/* Agrega más información de productos aquí si es necesario */}
         </div>
     );
 }
