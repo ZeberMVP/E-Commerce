@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts, addToCart } from "../../../redux";
 
-const serverUrl = process.env.RENDER_EXTERNAL_URL || 'http://localhost:5000';
+const serverUrl = process.env.REACT_APP_RENDER_EXTERNAL_URL || 'http://localhost:5000';
+console.log(process.env.REACT_APP_RENDER_EXTERNAL_URL)
 
 const api = axios.create({
     baseURL: serverUrl
