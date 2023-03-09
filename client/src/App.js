@@ -1,12 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Main from './components/Main';
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import { BrowserRouter } from 'react-router-dom';
+
 
 function App() {
   return (
-    <Router>
-      <Route path='/' element={<Main />} />
-    </Router>
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        <Main />
+      </BrowserRouter>
+    </div>
   );
 }
 

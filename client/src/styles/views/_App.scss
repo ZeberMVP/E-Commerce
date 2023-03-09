@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Titillium+Web:wght@300&display=swap');
+
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+body {
+    background-color: $anti-flash-white;
+}
+
+#root>div {
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: $russian-violet-dark;
+}

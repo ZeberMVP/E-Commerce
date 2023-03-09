@@ -1,0 +1,135 @@
+#text-and-filters,
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    margin: 15px 0;
+
+
+    input[type="text"] {
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+
+#productCardContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#cartFixed {
+    background-color: $non-photo-blue;
+    color: white;
+    border-radius: 50%;
+    position: inherit;
+    right: 10px;
+    bottom: 10px;
+    height: 90px;
+    z-index: 1;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    img {
+        height: 50px;
+        width: 50px;
+    }
+
+}
+
+#cartIconContainer {
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.productCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: $product-card-border-radius;
+    box-shadow: $product-card-shadow;
+    padding: $product-card-padding;
+    background-color: $product-card-background-color;
+    height: 350px;
+    width: 250px;
+    margin: 2% 0;
+
+    img {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        border-radius: $product-card-border-radius;
+    }
+
+    h3 {
+        margin: 8px 0;
+        color: $product-card-title-color;
+        font-size: 0.8em;
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    h5 {
+        margin: 4px 0;
+        color: $product-card-price-color;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    h4 {
+        margin: 4px 0;
+        color: $product-card-relevance-color;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    button {
+        margin: 8px 0;
+        color: $yinmn-blue;
+        background-color: $mauve;
+        border: none;
+        border-radius: $product-card-button-border-radius;
+        padding: $product-card-button-padding;
+        font-size: $product-card-button-font-size;
+        font-weight: $product-card-button-font-weight;
+        letter-spacing: $product-card-button-letter-spacing;
+        transition: $product-card-button-transition;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $product-card-button-hover-background-color;
+        }
+    }
+}
+
+.loader {
+    margin: 300px 0;
+    width: 48px;
+    height: 48px;
+    border: 5px solid #0000FF2e;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
